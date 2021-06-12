@@ -12,20 +12,6 @@
 - [PR](https://github.com/espressif/esp-idf/pull/5469) at esp-idf development
 - The functionality is similar to SPIFFS
 
-### Installation
-
-- Use **Arduino Library Manager** 
-- Or download / use **git** to have latest repository of **LITTLEFS** added to Arduino IDE **/libraries** folder  
-(File > Preferences > Sketchbook location).
-- See ``` #define CONFIG_LITTLEFS_FOR_IDF_3_2 ``` in **esp_littlefs.c**.  
-Now it is defined / undefined automatically by detecting the IDF version and core version.
-When defined, the library works with old and new IDFs 3.2 - 4.x but file timestamp feature is removed.
-See LITTLEFS_time example.
-- See ``` #define CONFIG_LITTLEFS_SPIFFS_COMPAT ``` in **esp_littlefs.c**.  
-When set to 1, folders are recursively created or deleted if empty on creating/deleting a new file like SPIFFS. Default is 0.
-- The other ``` #define CONFIG_LITTLEFS_xxxxx ``` are set to optimal default values.  
-Read [here](https://github.com/joltwallet/esp_littlefs/blob/master/Kconfig) and [here](https://github.com/littlefs-project//littlefs/blob/master/README.md) if you want to modify.
-- For low-level default error reporting modifications, see the defines at beginning of the **lfs.c** here.
 
 ### Usage
 
