@@ -19,10 +19,10 @@
 namespace fs
 {
 
-class LITTLEFSFS : public FS
+class LittleFSFS : public FS
 {
 public:
-    LITTLEFSFS();
+    LittleFSFS();
     bool begin(bool formatOnFail=false, const char * basePath="/littlefs", uint8_t maxOpenFiles=5);
     bool format();
     size_t totalBytes();
@@ -32,7 +32,7 @@ public:
 
 }
 
-extern fs::LITTLEFSFS LITTLEFS;
+extern fs::LittleFSFS LittleFS;
 
 
 #endif
