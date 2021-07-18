@@ -23,7 +23,7 @@ extern "C" {
 #include "esp_littlefs.h"
 }
 
-#include "LITTLEFS.h"
+#include "LittleFS.h"
 
 using namespace fs;
 
