@@ -1,6 +1,6 @@
 # LittleFS_esp32 for Tasmota (Arduino IDF 3.3.x)
 
-#### ***Notice: The Library is been integrated to [Arduino esp32 core idf-release/v4.2 branch](https://github.com/espressif/arduino-esp32/tree/idf-release/v4.2 ) and later versions
+#### ***Notice: The Library is been integrated to Arduino esp32 core idf-release/v4.2 branch and later versions
 
 
 ## LittleFS library for arduino-esp32
