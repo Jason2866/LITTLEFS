@@ -1,29 +1,24 @@
 #include "FS.h"
-//#include "SPIFFS.h" 
-#include "LITTLEFS.h"
-#include <time.h> 
+//#include "SPIFFS.h"
+#include "LittleFS.h"
+#include <time.h>
 #include <WiFi.h>
 
-#define SPIFFS LITTLEFS
+#define SPIFFS LittleFS
 
-/* This examples uses "quick re-define" of SPIFFS to run 
-   an existing sketch with LITTLEFS instead of SPIFFS
-   
-   To get time/date stamps by file.getLastWrite(), you need an 
-   esp32 core on IDF 3.3 and comment a line in file esp_littlefs.c:
-   
-   //#define CONFIG_LITTLEFS_FOR_IDF_3_2
+/* This examples uses "quick re-define" of SPIFFS to run
+   an existing sketch with LittleFS instead of SPIFFS
 
-   You only need to format LITTLEFS the first time you run a
-   test or else use the LITTLEFS plugin to create a partition
+   You only need to format LittleFS the first time you run a
+   test or else use the LittleFS plugin to create a partition
    https://github.com/lorol/arduino-esp32littlefs-plugin */
-   
+
 #define FORMAT_LITTLEFS_IF_FAILED true
 
 const char* ssid     = "yourssid";
 const char* password = "yourpass";
 
-long timezone = 1; 
+long timezone = 1;
 byte daysavetime = 1;
 
 void listDir(fs::FS &fs, const char * dirname, uint8_t levels){
@@ -48,7 +43,7 @@ void listDir(fs::FS &fs, const char * dirname, uint8_t levels){
             struct tm * tmstruct = localtime(&t);
             Serial.printf("  LAST WRITE: %d-%02d-%02d %02d:%02d:%02d\n",(tmstruct->tm_year)+1900,( tmstruct->tm_mon)+1, tmstruct->tm_mday,tmstruct->tm_hour , tmstruct->tm_min, tmstruct->tm_sec);
             if(levels){
-                listDir(fs, file.name(), levels -1);
+                listDir(fs, file.path(), levels -1);
             }
         } else {
             Serial.print("  FILE: ");
@@ -172,44 +167,44 @@ void setup(){
     getLocalTime(&tmstruct, 5000);
 	Serial.printf("\nNow is : %d-%02d-%02d %02d:%02d:%02d\n",(tmstruct.tm_year)+1900,( tmstruct.tm_mon)+1, tmstruct.tm_mday,tmstruct.tm_hour , tmstruct.tm_min, tmstruct.tm_sec);
     Serial.println("");
-    
+
     if(!SPIFFS.begin(FORMAT_LITTLEFS_IF_FAILED)){
-        Serial.println("LITTLEFS Mount Failed");
+        Serial.println("LittleFS Mount Failed");
         return;
     }
 
     Serial.println("----list 1----");
     listDir(SPIFFS, "/", 1);
-	
+
     Serial.println("----remove old dir----");
     removeDir(SPIFFS, "/mydir");
-	
+
     Serial.println("----create a new dir----");
     createDir(SPIFFS, "/mydir");
-	
+
     Serial.println("----remove the new dir----");
     removeDir(SPIFFS, "/mydir");
-	
+
     Serial.println("----create the new again----");
     createDir(SPIFFS, "/mydir");
-	
+
     Serial.println("----create and work with file----");
     writeFile(SPIFFS, "/mydir/hello.txt", "Hello ");
     appendFile(SPIFFS, "/mydir/hello.txt", "World!\n");
 
     Serial.println("----list 2----");
     listDir(SPIFFS, "/", 1);
-	
+
     Serial.println("----attempt to remove dir w/ file----");
     removeDir(SPIFFS, "/mydir");
-	
+
     Serial.println("----remove dir after deleting file----");
     deleteFile(SPIFFS, "/mydir/hello.txt");
     removeDir(SPIFFS, "/mydir");
-	
+
 	Serial.println("----list 3----");
     listDir(SPIFFS, "/", 1);
-	
+
 	Serial.println( "Test complete" );
 
 }
